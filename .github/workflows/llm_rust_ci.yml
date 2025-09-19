@@ -1,0 +1,23 @@
+name: LLM Rust CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+      - name: Build all
+        run: cargo build --all
+      - name: Test
+        run: cargo test --all
+      - name: Clippy
+        run: cargo clippy --all -- -D warnings
